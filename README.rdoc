@@ -1,4 +1,4 @@
-= acts_as_auditable
+= acts_as_current
 ===================
 
 Introduction goes here.

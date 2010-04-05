@@ -13,14 +13,24 @@ Gem::Specification.new do |s|
   s.description = %q{This acts_as extension provides a class method that allows models, controllers, and helpers access to the current instance of the model (however the request defines current).}
   s.email = %q{gem@coroutine.com}
   s.extra_rdoc_files = [
-    "README"
+    "README.rdoc"
   ]
   s.files = [
-    "VERSION",
+    ".gitignore",
+     "MIT-LICENSE",
+     "Rakefile",
+     "VERSION",
+     "acts_as_current.gemspec",
+     "init.rb",
      "lib/acts_as_current.rb",
      "lib/acts_as_current/base.rb",
      "lib/acts_as_current/class_methods.rb",
-     "lib/acts_as_current/instance_methods.rb"
+     "lib/acts_as_current/instance_methods.rb",
+     "rails/init.rb",
+     "test/acts_as_current/base_test.rb",
+     "test/acts_as_current/simple_test.rb",
+     "test/acts_as_current/sti_test.rb",
+     "test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/coroutine/acts_as_current}
   s.rdoc_options = ["--charset=UTF-8"]
