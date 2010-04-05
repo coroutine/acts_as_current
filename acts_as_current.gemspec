@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
      "MIT-LICENSE",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
      "acts_as_current.gemspec",
