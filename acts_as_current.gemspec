@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Coroutine", "John Dugan"]
   s.date = %q{2010-04-06}
-  s.description = %q{This acts_as extension provides an interface that allows models, controllers, and helpers access to the current instance of the model (however the request defines current).}
+  s.description = %q{This acts_as extension modifies ActiveRecord classes so they can carry a reference to the instance defined as current for the given request.  The library is particularly useful for providing the authenticated user object to models.}
   s.email = %q{gem@coroutine.com}
   s.extra_rdoc_files = [
     "README.rdoc"

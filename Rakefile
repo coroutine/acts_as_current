@@ -29,7 +29,7 @@ end
 begin
   Jeweler::Tasks.new do |gemspec|
     gemspec.authors           = ["Coroutine", "John Dugan"]
-    gemspec.description       = "This acts_as extension provides an interface that allows models, controllers, and helpers access to the current instance of the model (however the request defines current)."
+    gemspec.description       = "This acts_as extension modifies ActiveRecord classes so they can carry a reference to the instance defined as current for the given request.  The library is particularly useful for providing the authenticated user object to models."
     gemspec.email             = "gem@coroutine.com"
     gemspec.homepage          = "http://github.com/coroutine/acts_as_current"
     gemspec.name              = "acts_as_current"
