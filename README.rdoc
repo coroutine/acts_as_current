@@ -1,13 +1,110 @@
 = acts_as_current
-===================
 
-Introduction goes here.
+This library extends ActiveRecord classes so they can carry a reference to the 
+instance defined as current for the given request.
+
+<tt>acts_as_current</tt> can be applied to any model, but it's most common use case is 
+storing the authenticated user on the corresponding User model.  Doing so allows other models 
+and observers to access information about the user who made the request.  This is particularly 
+useful for auditing, versioning, etc.
+
+Here's how you'd set up the user example.  
+
+First, extend the User model.
+
+	class User < ActiveRecord::Base
+		acts_as_current
+	end
+	
+
+Then, tell your application controller to set the current user before all requests. (The controller 
+method can obviously be anything you want. Here, we use <tt>:current_user</tt> because that's our 
+convention at Coroutine.)
+
+	class ApplicationController < ActionController::Base
+		
+		before_filter { |controller| User.current = controller.send(:current_user) }
+	
+		def current_user
+			# return user or nil
+		end
+	end
 
 
-Example
-=======
+Finally, in your observer, you can retrieve the value of current_user by using the accessor mixed 
+into the model class.
 
-Example goes here.
+	class AuditObserver < ActiveRecord::Observer
+		observe :account, :balance
+
+		def after_update(record)
+  			AuditTrail.new({ :record => record, :action => :update, :whodunnit => User.current })
+		end
+	end
+	
+
+<tt>acts_as_current</tt> uses the hash Thread.current to store the current value for each class
+extended by the library.  Many consider this technique a hack, but for now, it is the only thread 
+safe way to store such data.  By coding the technique as a model extension, <tt>acts_as_current</tt> 
+abstracts and centralizes Thread.current reads and writes, greatly reducing the likelihood of 
+conflicts and errors.  We think the real benefits outweigh the perceived risks.
 
 
-Copyright (c) 2010 {Coroutine LLC}[http://coroutine], released under the MIT license
+
+
+== Helpful Links
+
+* <b>Repository:</b> http://github.com/coroutine/acts_as_current
+* <b>Gem:</b> http://rubygems.org/gems/acts_as_current
+* <b>Authors:</b> http://coroutine.com
+
+
+
+
+== Installation & Generators
+
+Install me from RubyGems.org and add a gem dependency in your configuration file.
+
+	$ sudo gem install acts_as_current
+
+Or install me as a plugin.
+
+	$ script/plugin install git://github.com/coroutine/acts_as_current.git
+
+	
+
+
+== Controller Recipe
+
+The most common use case for acts_as_current is tracking the current user of a Rails
+application.  
+
+He's an example of how you might set a current instance on a User class via a 
+current_user method, using a before filter in the application controller.
+
+	before_filter { |controller| User.current = controller.send(:current_user) }
+
+
+
+
+== Why Doesn't the Library Handle the Controller For Me?
+
+Primarily, because we think ActiveRecord extensions have no business altering
+controller logic.  Doing so couples aspects of your application that Rails is going 
+out of its way to separate.
+
+But also because the before_filter syntax is already configurable and extremely expressive. 
+Writing the before filter is no harder than writing a module include statement, but the former 
+tells a code maintainer <b>considerably</b> more information than the latter.
+
+In summary, suck it up and write the controller code yourself. :-) 
+
+
+
+
+== License
+
+Copyright (c) 2010 {Coroutine LLC}[http://coroutine.com], released under the MIT license.
+
+acts_as_current was inspired by sentient_user, copyright (c) 2009 bokmann, also released under the 
+MIT license.

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Coroutine", "John Dugan"]
-  s.date = %q{2010-04-05}
+  s.date = %q{2010-04-06}
   s.description = %q{This acts_as extension provides an interface that allows models, controllers, and helpers access to the current instance of the model (however the request defines current).}
   s.email = %q{gem@coroutine.com}
   s.extra_rdoc_files = [
@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<activerecord>, [">= 0"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
+      s.add_development_dependency(%q<activesupport>, [">= 0"])
     else
       s.add_dependency(%q<activerecord>, [">= 0"])
       s.add_dependency(%q<activesupport>, [">= 0"])

@@ -36,7 +36,7 @@ begin
     gemspec.summary           = "Gem version of acts_as_current Rails plugin."
     
     gemspec.add_dependency("activerecord")
-    gemspec.add_dependency("activesupport")
+    gemspec.add_development_dependency("activesupport")
     gemspec.files.include("lib/**/*.rb")
   end
   Jeweler::GemcutterTasks.new
