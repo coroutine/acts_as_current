@@ -12,34 +12,35 @@ Here's how you'd set up the user example.
 
 First, extend the User model.
 
-	class User < ActiveRecord::Base
-	  acts_as_current
-	end
+    class User < ActiveRecord::Base
+        acts_as_current
+    end
 	
 
 Then, tell your application controller to set the current user before all requests. (The controller 
 method can obviously be anything you want. Here, we use <tt>:current_user</tt> because that's our 
 convention at Coroutine.)
 
-	class ApplicationController < ActionController::Base
-	  before_filter { |controller| User.current = controller.send(:current_user) }
-	
-	  def current_user
-	    # return user or nil
-	  end
-	end
+    class ApplicationController < ActionController::Base
+        
+        before_filter { |controller| User.current = controller.send(:current_user) }
+
+        def current_user
+            # return user or nil
+        end
+    end
 
 
 Finally, in your observer, you can retrieve the value of current_user by using the accessor mixed 
 into the model class.
 
-	class AuditObserver < ActiveRecord::Observer
-	  observe :account, :balance
+    class AuditObserver < ActiveRecord::Observer
+        observe :account, :balance
 
-	  def after_update(record)
-  	    AuditTrail.new({ :record => record, :action => :update, :whodunnit => User.current })
-	  end
-	end
+        def after_update(record)
+            AuditTrail.new({ :record => record, :action => :update, :whodunnit => User.current })
+        end
+    end
 	
 
 
@@ -49,8 +50,10 @@ into the model class.
 <tt>acts_as_current</tt> uses the hash Thread.current to store the current value for each class
 extended by the library.  Many consider this technique a hack, but for now, it is the only thread 
 safe way to store such data.  By coding the technique as a model extension, <tt>acts_as_current</tt> 
-abstracts and centralizes Thread.current reads and writes, greatly reducing the likelihood of 
-conflicts and errors.  We think the real benefits outweigh the perceived risks.
+abstracts reads and writes against Thread.current, greatly reducing the likelihood of 
+conflicts and errors.  
+
+We think the real benefits outweigh the perceived risks.
 
 
 
@@ -68,11 +71,11 @@ conflicts and errors.  We think the real benefits outweigh the perceived risks.
 
 Install me from RubyGems.org and add a gem dependency in your configuration file.
 
-	$ sudo gem install acts_as_current
+    $ sudo gem install acts_as_current
 
 Or install me as a plugin.
 
-	$ script/plugin install git://github.com/coroutine/acts_as_current.git
+    $ script/plugin install git://github.com/coroutine/acts_as_current.git
 
 	
 
@@ -82,7 +85,7 @@ Or install me as a plugin.
 He's an example of how you might set a current instance on a User class via a 
 current_user method, using a before filter in the application controller.
 
-	before_filter { |controller| User.current = controller.send(:current_user) }
+    before_filter { |controller| User.current = controller.send(:current_user) }
 
 
 
