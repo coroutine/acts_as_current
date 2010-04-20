@@ -3,7 +3,7 @@
 This library extends ActiveRecord classes so they can carry a reference to the 
 instance defined as current for the given request.
 
-<tt>acts_as_current</tt> can be applied to any model, but it's most common use case is 
+<tt>acts_as_current</tt> can be applied to any model, but its most common use case is 
 storing the authenticated user on the corresponding User model.  Doing so allows other models 
 and observers to access information about the user who made the request.  This is particularly 
 useful for auditing, versioning, etc.
