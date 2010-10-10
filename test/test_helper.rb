@@ -35,7 +35,6 @@ def setup_db
       
       t.timestamps
     end
-    add_index :users, :email, :unique
   end
   
   ActiveRecord::Schema.define(:version => 1) do
